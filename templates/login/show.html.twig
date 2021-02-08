@@ -1,3 +1,67 @@
-{% if user %}
-    <span>{{ user.username }}</span>
-{% endif %}
+{% extends 'base.html.twig' %}
+{% block title %}Profile{% endblock %}
+{% block stylesheets %}
+    body {
+        background-color: #B3E5FC;
+        border-radius: 10px
+    }
+
+    .card {
+        width: 400px;
+        border: none;
+        border-radius: 10px;
+        background-color: #fff
+    }
+
+    .stats {
+        background: #f2f5f8 !important;
+        color: #000 !important
+    }
+
+    .articles {
+        font-size: 10px;
+        color: #a1aab9
+    }
+
+    .number1 {
+        font-weight: 500
+    }
+
+    .followers {
+        font-size: 10px;
+        color: #a1aab9
+    }
+
+    .number2 {
+        font-weight: 500
+    }
+
+    .rating {
+        font-size: 10px;
+        color: #a1aab9
+    }
+
+    .number3 {
+        font-weight: 500
+    }
+{% endblock %}
+{% block body %}
+    <div class="container mt-5 d-flex justify-content-center" id="profile">
+        <div class="card p-3">
+            <div class="d-flex align-items-center">
+                <div class="image">
+                    <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="155">
+                </div>
+                <div class="ml-3 w-100">
+                    <h4 class="mb-0 mt-0">{{ user.username }}</h4>
+                    <span>{{ user.email }}</span>
+                    <div class="button mt-2 d-flex flex-row align-items-center">
+                        <a href="/user/edit/{{ user.id }}" class="btn btn-sm btn-outline-primary w-100">Edit</a>
+                        <a href="#" id="delete-user" class="btn btn-sm btn-danger w-100 ml-2" data-id={{ user.id }}>Delete</a>
+                        <a href="/" class="btn btn-sm btn-outline-default w-100">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

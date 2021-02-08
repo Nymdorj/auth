@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Edit{% endblock %}
 {% block stylesheets %}
     .fa {
         font-size: 21px;
@@ -18,9 +18,9 @@
     }
 {% endblock %}
 {% block body %}
-    <form action="/user/add" method="post">
-		<h2>Sign Up</h2>
-		<p>Please fill in this form to create an account!</p>
+    <form action="/user/edit/{{ user.id }}" method="post">
+		<h2>Edit</h2>
+		<p>Please fill in this form to edit an account!</p>
 		<hr>
         <div class="form-group">
 			<div class="input-group">
@@ -29,7 +29,7 @@
 						<span class="fa fa-user"></span>
 					</span>                    
 				</div>
-				<input type="text" class="form-control" name="username" placeholder="Username" required>
+				<input type="text" class="form-control" name="username" placeholder="Username" required value="{{ user.username }}">
 			</div>
         </div>
         <div class="form-group">
@@ -39,7 +39,7 @@
 						<i class="fa fa-paper-plane"></i>
 					</span>                    
 				</div>
-				<input type="email" class="form-control" name="email" placeholder="Email Address" required>
+				<input type="email" class="form-control" name="email" placeholder="Email Address" required value="{{ user.email }}">
 			</div>
         </div>
 		<div class="form-group">
@@ -64,8 +64,8 @@
 			</div>
         </div>
 		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
-            <a href="/" class="btn btn-default btn-lg">Log In</a>
+            <button type="submit" class="btn btn-primary btn-lg">Confirm</button>
+            <a href="/show/{{ user.id }}" class="btn btn-default btn-lg">Cancel</a>
         </div>
     </form>
     {% if error is defined %}
