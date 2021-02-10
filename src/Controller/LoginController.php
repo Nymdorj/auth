@@ -21,36 +21,30 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="showWithId")
-     * @Method({"GET"})
-     */
-    public function showWithId(Request $request, $id)
-    {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        return $this->render('login/show.html.twig', ['user' => $user]);
-    }
-
-    /**
-     * @Route("/show", name="show")
+     * @Route("/signin", name="signin")
      * @Method({"POST"})
      */
-    public function show(Request $request)
+    public function signin(Request $request)
     {
+        $session  = $request->getSession();
         $password = $request->request->get('password');
         $email    = $request->request->get('email');
-        $pwdPep   = hash_hmac("sha256", $password, 'c1isvFdxMDdmjOlvxpecFw');
 
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
-            'email' => $email
-        ]);
+        if ($password && $email) {
+            $pwdPep   = hash_hmac("sha256", $password, 'c1isvFdxMDdmjOlvxpecFw');
 
-        if ($user) {
-            if (password_verify($pwdPep, $user->getPassword())) {
-                return $this->render('login/show.html.twig', ['user' => $user]);
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
+
+            if ($user) {
+                if (password_verify($pwdPep, $user->getPassword())) {
+                    $session->set('user', $user);
+                    return $this->redirectToRoute('profile');
+                }
             }
-        }
 
-        return $this->render('login/login.html.twig', ['error' => 'Wrong username or password']);
+            return $this->render('login/login.html.twig', ['error' => 'Wrong username or password']);
+        }
+        return $this->render('login/login.html.twig');
     }
 
     /**
@@ -126,7 +120,7 @@ class LoginController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('showWithId', ['id' => $id]);
+            return $this->redirectToRoute('signin');
         }
 
         return $this->render('login/edit.html.twig', ['user' => $user]);

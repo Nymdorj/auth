@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ post.title }}</title>
+        <link rel="stylesheet" href="http://adventurethemes.com/demo/writer/jekyll/v1-4/css/main.css">
+    </head>
+    <body>
+        <header class="hero-image" style='background-image: url({{ asset('assets/images/feature-water.jpg') }});'></header>
+        <main class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 single-content-sidebar">
+                    <h1>{{ post.title }}</h1>
+                    <p>{{ post.content }}</p>
+                </div>
+                <div class="col-xs-12 col-md-3 col-md-offset-1 single-content-sidebar-area">
+                    <img src='https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80' class="user-icon " alt="user-image">
+                    <div class="meta">
+                        <div class="sidebar-info">
+                            <a href="/profile">{{ post.author }}</a>
+                        </div>
+                        <div class="sidebar-readtime">
+                            <i class="fa fa-bookmark"></i> {{ post.duration }} minute read
+                        </div>
+                        <div class="sidebar-readtime">
+                            <a href="/post/edit/{{ post.id }}" class="btn btn-primary" style="color: #fff">Edit</a>
+                            <a href="#" class="btn btn-danger" style="color: #fff" data-id="{{ post.id }}" id="remove_post">Remove</a>
+                            <a href="/profile" class="btn btn-outline-default">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script>
+            const remove_post = document.getElementById("remove_post");
+
+            remove_post.addEventListener(
+            "click",
+            (e) =>
+                confirm("Are you sure?") &&
+                fetch(`/post/delete/${e.target.dataset.id}`, {
+                method: "DELETE",
+                }).then((res) => (res.ok ? 
+                    window.location.replace('/profile') : (res.json()).finally(res => alert(res)))
+                )
+            );
+        </script>
+    </body>
+</html>

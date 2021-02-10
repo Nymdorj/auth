@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Profile</title>
+        <link rel="stylesheet" href="http://adventurethemes.com/demo/writer/jekyll/v1-4/css/main.css">
+        {# <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css"/> #}
+        <style>
+            .card {
+                border: none;
+                border-radius: 10px;
+                background-color: #fff;
+                padding: 15px;
+            }
+
+            .d-flex{
+                display: flex;
+            }
+
+            .mb-0 {
+                margin-bottom: 0;
+            }
+
+            .mt-0 {
+                margin-top: 0;
+            }
+
+            .mt-2 {
+                margin-top: 1.5rem;
+            }
+
+            .w-100 {
+                width: 100% !important;
+            }
+
+            .ml-2 {
+                margin-left: 1.5rem;
+            }
+
+            .ml-3 {
+                margin-left: 2rem;
+            }
+
+            .align-items-center {
+                align-items: center;
+            }
+
+            .user-email {
+                font-size: 12px;
+            }
+
+            .user-name {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container left-container">
+            <div class="row">
+                <section class="sidebar col-md-5 col-sm-12" style='background-image: url({{ asset('assets/images/feature-san-fran.jpg') }});'>
+                    <div style="padding-left: 20px">
+                        <div class="mt-5 d-flex justify-content-center" id="profile">
+                            <div class="card p-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="155">
+                                    </div>
+                                    <div class="ml-3 w-100">
+                                        <h4 class="mb-0 mt-0 user-name">{{ user.username }}</h4>
+                                        <span class="user-email">{{ user.email }}</span>
+                                        <div class="button mt-2 d-flex flex-row align-items-center">
+                                            <a href="/user/edit/{{ user.id }}" class="btn btn-sm btn-primary w-100">Edit</a>
+                                            <a href="#" id="delete-user" class="btn btn-sm btn-danger w-100 ml-2" data-id={{ user.id }}>Delete</a>
+                                            <a href="/" class="btn btn-sm btn-outline-default w-100 ml-2">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="site-info">
+                        <div class="primary-info">
+                            <h1>Writer</h1>
+                            <p>Short stories from around the campfire for a fellow world explorer.</p>
+                        </div>
+                        <div class="secondary-info">
+                            <p>
+                                <a class="btn btn-primary" href="/post/new"><i class="fa fa-user-plus"></i>New post</a>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <div class="col-md-7 col-sm-12 col-md-offset-5 main-content">
+                    <div class="sub-nav">
+                        <h2 class="select-posts">Posts</h2>
+                    </div>
+                    <div class="home-page-posts animated fadeIn">
+                        {% if posts is defined %}    
+                            {% for post in posts %}
+                                <article class="post">
+                                    <div class="post-preview col-xs-10  no-gutter">
+                                        <h2><a href="/postView/{{ post.id }}">{{ post.title }}</a></h2>
+                                        <p>{{ post.content }}</p>
+                                        <p class="meta">
+                                            <span>{{ post.author }}</span> <i class="link-spacer"></i> <i class="fa fa-bookmark"></i> {{ post.duration }} minutes
+                                        </p>
+                                    </div>
+                                    <div class=" col-xs-2  no-gutter">
+                                        <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="user-icon user-1" alt="user-image">
+                                    </div>
+                                </article>    
+                            {% endfor %}
+                        {% else %}
+                            <h1 style="color: #bebebe">Anything to show ...</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="js/main.js"></script>
+    </body>
+</html>
